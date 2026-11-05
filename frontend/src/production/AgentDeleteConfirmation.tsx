@@ -25,7 +25,7 @@ export function AgentDeleteConfirmation({ agent, onClose, onConfirm }: AgentDele
   const [pending, setPending] = useState(false);
   const [failure, setFailure] = useState<string | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
-  const confirmRef = useRef<HTMLButtonElement>(null);
+  const cancelRef = useRef<HTMLButtonElement>(null);
   const isOpen = agent != null;
 
   useEffect(() => {
@@ -37,7 +37,7 @@ export function AgentDeleteConfirmation({ agent, onClose, onConfirm }: AgentDele
   useEffect(() => {
     if (!isOpen) return;
     const previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    confirmRef.current?.focus({ preventScroll: true });
+    cancelRef.current?.focus({ preventScroll: true });
     return () => {
       if (previouslyFocused?.isConnected) previouslyFocused.focus();
     };
@@ -96,8 +96,8 @@ export function AgentDeleteConfirmation({ agent, onClose, onConfirm }: AgentDele
     <p>{deleteDescription(agent)}</p>
     {failure == null ? null : <p role="alert">{failure}</p>}
     <footer style={{ display: "flex", justifyContent: "flex-end", gap: 8, margin: "18px -20px -20px", padding: "12px 16px", borderTop: "1px solid var(--cursor-border-secondary)" }}>
-      <SandButton disabled={pending} onClick={onClose} size="sm" variant="secondary">Cancel</SandButton>
-      <SandButton disabled={pending} onClick={() => void confirm()} ref={confirmRef} sentiment="danger" size="sm">{pending ? "Deleting..." : "Delete"}</SandButton>
+      <SandButton disabled={pending} onClick={onClose} ref={cancelRef} size="sm" variant="secondary">Cancel</SandButton>
+      <SandButton disabled={pending} onClick={() => void confirm()} sentiment="danger" size="sm">{pending ? "Deleting..." : "Delete"}</SandButton>
     </footer>
   </div>;
 }
