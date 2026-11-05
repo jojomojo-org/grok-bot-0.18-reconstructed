@@ -36,6 +36,7 @@ export function AgentNameEditor({ initialValue, onCommit, onExit }: AgentNameEdi
   };
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     event.stopPropagation();
+    if (event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return;
     if (event.key === "Enter") {
       event.preventDefault();
       event.currentTarget.blur();
